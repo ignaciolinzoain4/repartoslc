@@ -9,7 +9,9 @@ import { dbHealth } from './db/client.js';
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || "*"
+}));
 app.use(express.json());
 
 const success = (res, data = {}, code = 200) => res.status(code).json(data);
@@ -159,6 +161,6 @@ app.post('/api/replenishments/:requestId/confirm', (req, res) => {
   success(res, request);
 });
 
-app.listen(PORT, () => {
-  console.log(`API lista en http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`API lista en puerto ${PORT}`);
 });
