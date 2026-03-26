@@ -28,9 +28,9 @@ function App() {
 
   useEffect(() => {
     Promise.all([
-      api('/api/stores'),
-      api('/api/items'),
-      api('/api/stock-targets')
+      api('/stores'),
+      api('/items'),
+      api('/stock-targets')
     ]).then(([storesRes, itemsRes, targetsRes]) => {
       setStores(storesRes);
       setItems(itemsRes);
@@ -65,11 +65,11 @@ function App() {
           quantity_sale_units: Number(stockValues[line.itemId] || 0)
         }))
       };
-      const snapshot = await api(`/api/stores/${selectedStore}/stock-snapshots`, {
+      const snapshot = await api(`/stores/${selectedStore}/stock-snapshots`, {
         method: 'POST',
         body: JSON.stringify(payload)
       });
-      const calc = await api('/api/replenishments/calculate', {
+      const calc = await api('/replenishments/calculate', {
         method: 'POST',
         body: JSON.stringify({
           store_id: selectedStore,
